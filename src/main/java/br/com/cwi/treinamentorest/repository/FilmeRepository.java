@@ -34,4 +34,8 @@ public class FilmeRepository {
         final Filme filme = filmes.get(id);
         filme.setTitulo(titulo);
     }
+
+    public void deletarFilme(Long id) {
+        filmes.remove(id);
+    }
 }
