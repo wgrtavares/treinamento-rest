@@ -4,7 +4,6 @@ import br.com.cwi.treinamentorest.domain.Filme;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -16,8 +15,8 @@ public class FilmeRepository {
 
     static {
         filmes = new ArrayList<>( asList(
-                new Filme("avatar"),
-                new Filme("vingadores")
+                new Filme(1L, "avatar"),
+                new Filme(2L, "vingadores")
         ));
     }
 
@@ -26,6 +25,7 @@ public class FilmeRepository {
     }
 
     public void cadastrarFilme(Filme filme) {
+        filme.setId(getFilmes().size() + 1L);
         filmes.add(filme);
     }
 }
