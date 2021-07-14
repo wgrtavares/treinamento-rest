@@ -16,13 +16,13 @@ public class FilmesController {
     @Autowired
     private CadastrarFilmeService cadastrarFilmeService;
 
-    @GetMapping("/listar-filmes")
+    @GetMapping("/")
     public ListarFilmesResponse getFilmes() {
         return listarFilmesService.listarFilmes();
     }
 
-    @PostMapping("/cadastrar-filme")
-    public void cadastrarFilme(@RequestBody final CadastrarFilmeRequest request){
+    @PostMapping("/")
+    public void cadastrarFilme(@RequestBody final CadastrarFilmeRequest request) {
         cadastrarFilmeService.cadastrarFilme(request);
     }
 }
