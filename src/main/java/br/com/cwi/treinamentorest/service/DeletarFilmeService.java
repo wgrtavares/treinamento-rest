@@ -11,6 +11,6 @@ public class DeletarFilmeService {
     FilmeRepository repository;
 
     public void deletarFilme(Long id) {
-        repository.deletarFilme(id);
+        repository.deletar(id);
     }
 }

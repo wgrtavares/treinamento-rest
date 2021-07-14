@@ -22,12 +22,12 @@ public class FilmeRepository {
         return new ArrayList<>(filmes.values());
     }
 
-    public void cadastrarFilme(Filme filme) {
+    public void cadastrar(Filme filme) {
         filme.setId(getFilmes().size() + 1L);
         filmes.put(filme.getId(), filme);
     }
 
-    public void modificarFilme(Long id, String titulo) {
+    public void modificar(Long id, String titulo) {
         if(!filmes.containsKey(id))
             return;
 
@@ -35,7 +35,7 @@ public class FilmeRepository {
         filme.setTitulo(titulo);
     }
 
-    public void deletarFilme(Long id) {
+    public void deletar(Long id) {
         filmes.remove(id);
     }
 }

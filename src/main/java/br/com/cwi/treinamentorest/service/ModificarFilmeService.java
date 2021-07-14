@@ -12,6 +12,6 @@ public class ModificarFilmeService {
     private FilmeRepository repository;
 
     public void modificarFilme(Long id, ModificarFilmeRequest request) {
-        repository.modificarFilme(id, request.getTitulo());
+        repository.modificar(id, request.getTitulo());
     }
 }
