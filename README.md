@@ -3,4 +3,5 @@ Treinamento Rest
 
 ## Aula 6 - Swagger
   * Configuração inicial
-  * Customização 
+  * Customização geral - nome e descrição da API
+  * Customização dos controllers e operações
