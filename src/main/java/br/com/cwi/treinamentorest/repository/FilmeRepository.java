@@ -22,9 +22,10 @@ public class FilmeRepository {
         return new ArrayList<>(filmes.values());
     }
 
-    public void cadastrar(Filme filme) {
-        filme.setId(getFilmes().size() + 1L);
-        filmes.put(filme.getId(), filme);
+    public void cadastrar(String titulo) {
+        filmes.put(filmes.size() +1L, Filme.builder()
+                .titulo(titulo)
+                .build());
     }
 
     public void modificar(Long id, String titulo) {
