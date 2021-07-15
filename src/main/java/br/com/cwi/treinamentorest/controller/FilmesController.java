@@ -1,5 +1,6 @@
 package br.com.cwi.treinamentorest.controller;
 
+import br.com.cwi.treinamentorest.controller.api.FilmesControllerAPI;
 import br.com.cwi.treinamentorest.request.CadastrarFilmeRequest;
 import br.com.cwi.treinamentorest.request.ModificarFilmeRequest;
 import br.com.cwi.treinamentorest.response.ListarFilmesResponse;
@@ -11,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class FilmesController {
+@RequestMapping("/filme")
+public class FilmesController implements FilmesControllerAPI {
 
     @Autowired
     private ListarFilmesService listarFilmesService;
@@ -26,7 +28,7 @@ public class FilmesController {
     private DeletarFilmeService deletarFilmeService;
 
     @GetMapping("/")
-    public ListarFilmesResponse getFilmes() {
+    public ListarFilmesResponse listarFilmes() {
         return listarFilmesService.listarFilmes();
     }
 
