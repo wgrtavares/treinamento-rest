@@ -8,6 +8,8 @@ import br.com.cwi.treinamentorest.request.CadastrarFilmeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CadastrarFilmeService {
 
@@ -18,10 +20,10 @@ public class CadastrarFilmeService {
     private DiretorRepository diretorRepository;
 
     public void cadastrarFilme(CadastrarFilmeRequest request) {
-        final Diretor diretor = diretorRepository.getOne(request.getIdDiretor());
+        final Optional<Diretor> diretor = diretorRepository.findById(request.getIdDiretor());
         filmeRepository.save( Filme.builder()
                 .titulo(request.getTitulo())
-                .diretor(diretor)
+                .diretor(diretor.orElse(null))
                 .build());
     }
 }

@@ -12,4 +12,5 @@ import java.io.Serializable;
 public class ModificarFilmeRequest implements Serializable {
     private static final long serialVersionUID = 2890081244466441916L;
     private String titulo;
+    private Long idDiretor;
 }

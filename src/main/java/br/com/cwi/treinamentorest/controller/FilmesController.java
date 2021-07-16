@@ -9,6 +9,7 @@ import br.com.cwi.treinamentorest.service.DeletarFilmeService;
 import br.com.cwi.treinamentorest.service.ListarFilmesService;
 import br.com.cwi.treinamentorest.service.ModificarFilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,6 +34,7 @@ public class FilmesController implements FilmesControllerAPI {
     }
 
     @PostMapping("/")
+    @ResponseStatus(HttpStatus.CREATED)
     public void cadastrarFilme(@RequestBody final CadastrarFilmeRequest request) {
         cadastrarFilmeService.cadastrarFilme(request);
     }
