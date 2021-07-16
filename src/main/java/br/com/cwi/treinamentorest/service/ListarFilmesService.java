@@ -14,7 +14,7 @@ public class ListarFilmesService {
     public ListarFilmesResponse listarFilmes() {
         return
                 ListarFilmesResponse.builder()
-                        .filmes(repositorio.getFilmes())
+                        .filmes(repositorio.findAll())
                         .build();
     }
 }

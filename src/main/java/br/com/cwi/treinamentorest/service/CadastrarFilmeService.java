@@ -13,7 +13,7 @@ public class CadastrarFilmeService {
     private FilmeRepository repository;
 
     public void cadastrarFilme(CadastrarFilmeRequest request) {
-        repository.cadastrar(
+        repository.save(
                 Filme.builder()
                 .titulo(request.getTitulo())
                 .build());

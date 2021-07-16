@@ -1,5 +1,6 @@
 package br.com.cwi.treinamentorest.service;
 
+import br.com.cwi.treinamentorest.domain.Filme;
 import br.com.cwi.treinamentorest.repository.FilmeRepository;
 import br.com.cwi.treinamentorest.request.ModificarFilmeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,10 @@ public class ModificarFilmeService {
     private FilmeRepository repository;
 
     public void modificarFilme(Long id, ModificarFilmeRequest request) {
-        repository.modificar(id, request.getTitulo());
+        repository.save(
+                Filme.builder()
+                        .id(id)
+                        .titulo(request.getTitulo())
+                        .build());
     }
 }
