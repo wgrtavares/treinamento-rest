@@ -1,41 +1,39 @@
 package br.com.cwi.treinamentorest.repository;
 
 import br.com.cwi.treinamentorest.domain.Filme;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
-public class FilmeRepository {
+public interface FilmeRepository extends JpaRepository<Filme, Long> {
 
-    static final Map<Long, Filme> filmes = new HashMap<>();
+    /**
+     * Pesquisando filmes por título.
+     * @param titulo
+     * @return
+     */
+    Filme findByTitulo(String titulo);
 
-    static {
-        filmes.put(1L, new Filme(1L, "Avatar"));
-        filmes.put(2L, new Filme(2L, "Vingadores"));
-    }
+    /**
+     * Pequisando filmes por id do Diretor.
+     * @param id
+     * @return
+     */
+    List<Filme> findByDiretorId(Long id);
 
-    public List<Filme> getFilmes() {
-        return new ArrayList<>(filmes.values());
-    }
+    /**
+     * Contando filmes por id do Diretor.
+     * @param id
+     * @return
+     */
+    Long countByDiretorId(Long id);
 
-    public void cadastrar(Filme filme) {
-        filme.setId(getFilmes().size() + 1L);
-        filmes.put(filme.getId(), filme);
-    }
-
-    public void modificar(Long id, String titulo) {
-        if(!filmes.containsKey(id))
-            return;
-
-        final Filme filme = filmes.get(id);
-        filme.setTitulo(titulo);
-    }
-
-    public void deletar(Long id) {
-        filmes.remove(id);
-    }
+    /**
+     * Verifica se existe filme com o diretor.id.
+     * @param id
+     * @return
+     */
+    Boolean existsByDiretorId(Long id);
 }
