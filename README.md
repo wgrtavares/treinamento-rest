@@ -6,7 +6,7 @@ Treinamento Rest
   * Customização geral - nome e descrição da API
   * Customização dos *controllers* e operações
 
-## Aulas 8 e 9 - Pesquisa no banco de dados
+## Aulas 8, 9 e 10 - Pesquisa no banco de dados
 
 Utilizando mapeamento *JPA* e *Repositories* do Spring.
 
