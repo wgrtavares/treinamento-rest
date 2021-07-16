@@ -20,4 +20,8 @@ public class Filme implements Serializable {
     @Column(name = "TITULO")
     private String titulo;
 
+    @ManyToOne
+    @JoinColumn(name = "ID_DIRETOR")
+    private Diretor diretor;
+
 }
