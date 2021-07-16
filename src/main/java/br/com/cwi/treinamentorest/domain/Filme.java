@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "FILME")
@@ -23,5 +24,13 @@ public class Filme implements Serializable {
     @ManyToOne
     @JoinColumn(name = "ID_DIRETOR")
     private Diretor diretor;
+
+    @ManyToMany
+    @JoinTable(
+            name = "FILME_ATOR",
+            joinColumns = @JoinColumn(name = "ID_FILME"),
+            inverseJoinColumns = @JoinColumn(name = "ID_ATOR")
+    )
+    private List<Ator> atores;
 
 }
