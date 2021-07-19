@@ -33,6 +33,7 @@ public class CadastrarFilmeService {
                 .orElseThrow(() ->new ResponseStatusException(HttpStatus.NOT_FOUND, "Diretor não encontrado."));
 
         final List<Ator> atores = atorRepository.findByIdIn(request.getIdsAtores());
+
         filmeRepository.save( Filme.builder()
                 .titulo(request.getTitulo())
                 .diretor(diretor)
