@@ -17,3 +17,6 @@ Utilizando mapeamento *JPA* e *Repositories* do Spring.
 ## Aula 11 - Java funcional
 
 ## Aula 12 - Testes unitários com Mockito
+
+Notações @Mock, @Spy, @InjectMocks, @Captor.
+Operações Assert e Verify.
