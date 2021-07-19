@@ -13,3 +13,7 @@ Utilizando mapeamento *JPA* e *Repositories* do Spring.
  * Tipos de relacionamento
  * Mapeando entidades
  * Usando o *Repositories*
+
+## Aula 11 - Java funcional
+
+## Aula 12 - Testes unitários com Mockito
