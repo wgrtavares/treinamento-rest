@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@Builder
 public class CadastrarFilmeRequest implements Serializable {
 
     private static final long serialVersionUID = 5080855787783936012L;
