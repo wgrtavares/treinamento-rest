@@ -20,3 +20,6 @@ Utilizando mapeamento *JPA* e *Repositories* do Spring.
 
 Notações @Mock, @Spy, @InjectMocks, @Captor.
 Operações Assert e Verify.
+
+## Aula 13 - Integração com API externa
+
