@@ -23,3 +23,12 @@ Operações Assert e Verify.
 
 ## Aula 13 - Integração com API externa
 
+Aqui foi criada uma classe *service* para consumir a API de filmes da omdb. Para esta 
+aula, é necessário se cadastrar em https://omdbapi.com/apikey.aspx para receber uma 
+*apiKey* necessária para o consumo da API.
+
+ * Foi utilizado o *restTemplate.getForEntity* para enviar uma requisição http GET para 
+   a API externa;
+ * Foram utilizadas notações *com.fasterxml.jackson.annotation* para mapear a *response* 
+   da API externa. Vide classe *ContarOmdbApiResponse*;
+
