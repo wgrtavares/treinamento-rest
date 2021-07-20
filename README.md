@@ -32,3 +32,6 @@ aula, é necessário se cadastrar em https://omdbapi.com/apikey.aspx para recebe
  * Foram utilizadas notações *com.fasterxml.jackson.annotation* para mapear a *response* 
    da API externa. Vide classe *ContarOmdbApiResponse*;
 
+## Aula 14 - Integração com API externa
+
+Refinamento da aula 13.
