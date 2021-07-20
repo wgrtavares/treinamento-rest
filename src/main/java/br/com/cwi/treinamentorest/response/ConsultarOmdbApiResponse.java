@@ -16,5 +16,18 @@ public class ConsultarOmdbApiResponse implements Serializable {
     private static final long serialVersionUID = -7419144246628911824L;
 
     @JsonProperty("Title")
-    private String title;
+    private String titulo;
+
+    @JsonProperty("Year")
+    private String ano;
+
+    @JsonProperty("Released")
+    private String dataLancamento;
+
+    @JsonProperty("Runtime")
+    private String duracao;
+
+    @JsonProperty("Genre")
+    private String genero;
+
 }
