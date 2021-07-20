@@ -3,7 +3,7 @@ package br.com.cwi.treinamentorest.controller;
 import br.com.cwi.treinamentorest.controller.api.FilmesControllerAPI;
 import br.com.cwi.treinamentorest.request.CadastrarFilmeRequest;
 import br.com.cwi.treinamentorest.request.ModificarFilmeRequest;
-import br.com.cwi.treinamentorest.response.ConsultarOmdbApiResponse;
+import br.com.cwi.treinamentorest.response.ConsultarOmdbResponse;
 import br.com.cwi.treinamentorest.response.ListarFilmesResponse;
 import br.com.cwi.treinamentorest.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class FilmesController implements FilmesControllerAPI {
     }
 
     @GetMapping("/titulo/{titulo}")
-    public ConsultarOmdbApiResponse consultarFilmePorTitulo(@PathVariable final String titulo) {
+    public ConsultarOmdbResponse consultarFilmePorTitulo(@PathVariable final String titulo) {
         return consultarOmdbApiService.consultarPorTitulo(titulo);
     }
 }

@@ -1,6 +1,8 @@
 package br.com.cwi.treinamentorest.service;
 
+import br.com.cwi.treinamentorest.mapper.ConsultarOmdbResponseMapper;
 import br.com.cwi.treinamentorest.response.ConsultarOmdbApiResponse;
+import br.com.cwi.treinamentorest.response.ConsultarOmdbResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,10 +33,12 @@ public class ConsultarOmdbApiService {
     private final String url = "http://www.omdbapi.com/?apikey=%s";
     private final String urlTitulo = String.join("&", url,  "t=%s");
 
-    public ConsultarOmdbApiResponse consultarPorTitulo(String titulo) {
+    public ConsultarOmdbResponse consultarPorTitulo(String titulo) {
 
         try {
-            return restTemplate.getForEntity(montarUrlTitulo(titulo), ConsultarOmdbApiResponse.class).getBody();
+            return new ConsultarOmdbResponseMapper().apply(
+                    restTemplate.getForEntity(montarUrlTitulo(titulo), ConsultarOmdbApiResponse.class).getBody()
+            );
         } catch (final HttpStatusCodeException hsce) {
             log.error("Erro na chamada para OMDB API", hsce);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, hsce.getResponseBodyAsString());
