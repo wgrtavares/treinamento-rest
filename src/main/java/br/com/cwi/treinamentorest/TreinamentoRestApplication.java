@@ -22,7 +22,7 @@ public class TreinamentoRestApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		ResponseEntity<ConsultarOmdbApiResponse> resultadoConsulta =
-				consultarOmdbApiService.consultarApi("Avengers");
+//		ResponseEntity<ConsultarOmdbApiResponse> resultadoConsulta =
+//				consultarOmdbApiService.consultarApi("Avengers");
 	}
 }
