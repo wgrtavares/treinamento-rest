@@ -3,11 +3,9 @@ package br.com.cwi.treinamentorest.controller;
 import br.com.cwi.treinamentorest.controller.api.FilmesControllerAPI;
 import br.com.cwi.treinamentorest.request.CadastrarFilmeRequest;
 import br.com.cwi.treinamentorest.request.ModificarFilmeRequest;
+import br.com.cwi.treinamentorest.response.ConsultarOmdbResponse;
 import br.com.cwi.treinamentorest.response.ListarFilmesResponse;
-import br.com.cwi.treinamentorest.service.CadastrarFilmeService;
-import br.com.cwi.treinamentorest.service.DeletarFilmeService;
-import br.com.cwi.treinamentorest.service.ListarFilmesService;
-import br.com.cwi.treinamentorest.service.ModificarFilmeService;
+import br.com.cwi.treinamentorest.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +26,9 @@ public class FilmesController implements FilmesControllerAPI {
     @Autowired
     private DeletarFilmeService deletarFilmeService;
 
+    @Autowired
+    private ConsultarOmdbApiService consultarOmdbApiService;
+
     @GetMapping("/")
     public ListarFilmesResponse listarFilmes() {
         return listarFilmesService.listarFilmes();
@@ -47,5 +48,10 @@ public class FilmesController implements FilmesControllerAPI {
     @DeleteMapping("/{id}")
     public void deletarFilme(@PathVariable final Long id) {
         deletarFilmeService.deletarFilme(id);
+    }
+
+    @GetMapping("/titulo/{titulo}")
+    public ConsultarOmdbResponse consultarFilmePorTitulo(@PathVariable final String titulo) {
+        return consultarOmdbApiService.consultarPorTitulo(titulo);
     }
 }

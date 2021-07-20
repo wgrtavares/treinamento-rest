@@ -1,36 +1,34 @@
 package br.com.cwi.treinamentorest.response;
 
+import br.com.cwi.treinamentorest.domain.Ator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class ConsultarOmdbApiResponse implements Serializable {
+public class ConsultarOmdbResponse implements Serializable {
 
-    private static final long serialVersionUID = -7419144246628911824L;
+    private static final long serialVersionUID = 8715856817808328471L;
 
-    @JsonProperty("Title")
     private String titulo;
 
-    @JsonProperty("Year")
     private String ano;
 
-    @JsonProperty("Released")
     private String dataLancamento;
 
-    @JsonProperty("Runtime")
     private String duracao;
 
-    @JsonProperty("Genre")
     private String genero;
 
-    @JsonProperty("Actors")
-    private String atores;
+    private List<Ator> atores;
 
 }
