@@ -16,6 +16,77 @@ Utilizando mapeamento *JPA* e *Repositories* do Spring.
 
 ## Aula 11 - Java funcional
 
+###Interfaces funcionais
+#### Function
+Recebe apenas um parâmetro e retorna um valor.
+
+Exemplo: `(valor) -> valorRetorno`
+
+#### BiFunction
+Recebe dois parametros e retorna um valor.
+
+Exemplo: `(valor1, valor2)->valorRetorno`
+
+#### Suplier
+Não recebe parâmetro e retorno um valor.
+
+Exemplo: `()->valorRetorno`
+   
+#### Consumer
+Recebe um parametro e não retorna nada.
+
+Exemplo:
+````
+(valor)->{
+/*executa código sem retorno*/
+}
+````
+
+Possui variantes, como o BiConsumer.
+
+#### Predicate
+Recebe um parâmetro e retorna um booleano.
+
+Exemplo: `(valor)-> // retorna um valor booleano`
+
+#### Operator
+Recebe um parâmetro e retorna um valor do mesmo tipo do parâmetro.
+
+Exemplo:
+````
+(valor)->{
+/* retorna um valor do mesmo tipo passado*/
+}
+````
+
+ ### Optional
+Recurso criado para encapsular retorno de métodos, criado 
+basicamente para evitar erros de *NullPointerExcption*.
+
+Principais métodos:
+ * empty()
+ * of()
+ * ofNullable()
+ * get()
+ * ifPresent()
+ * isPresent()
+
+ ### Streams
+Criado para facilitar a manipulação de coleções.
+
+Exemplo:
+````
+List<String> lista = new ArrauList<>();
+lista.stream() // transformo a lista em um stream
+````
+
+Principais métodos:
+ * map()
+ * filter()
+ * reduce()
+ * collect()
+
+
 ## Aula 12 - Testes unitários com Mockito
 
 Notações @Mock, @Spy, @InjectMocks, @Captor.
