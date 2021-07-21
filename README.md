@@ -5,7 +5,7 @@ Treinamento Rest.
 
 ## Aula 2, 3, 4, 5 - API REST
 
-## Aula 6 - Configuração de banado de dados na aplicação
+## Aula 6 - Configuração de banco de dados na aplicação
 
 ## Aula 7 - *Swagger*
   * Configuração inicial
