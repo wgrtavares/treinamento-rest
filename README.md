@@ -1,5 +1,11 @@
 # treinamento-rest
-Treinamento Rest
+Treinamento Rest.
+
+## Aula 1 - Orientação a objetos
+
+## Aula 2, 3, 4, 5 - API REST
+
+## Aula 6 - Configuração de banado de dados na aplicação
 
 ## Aula 7 - *Swagger*
   * Configuração inicial
