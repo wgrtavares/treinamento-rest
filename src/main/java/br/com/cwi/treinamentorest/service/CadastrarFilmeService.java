@@ -8,12 +8,11 @@ import br.com.cwi.treinamentorest.repository.DiretorRepository;
 import br.com.cwi.treinamentorest.repository.FilmeRepository;
 import br.com.cwi.treinamentorest.request.CadastrarFilmeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CadastrarFilmeService {
@@ -29,10 +28,14 @@ public class CadastrarFilmeService {
 
     public void cadastrarFilme(CadastrarFilmeRequest request) {
 
-        Diretor diretor = diretorRepository.findById(request.getIdDiretor())
-                .orElseThrow(() ->new ResponseStatusException(HttpStatus.NOT_FOUND, "Diretor não encontrado."));
+        final Diretor diretor =
+               diretorRepository.findById(request.getIdDiretor())
+                       .orElseThrow(() -> new EntityNotFoundException("Diretor não encontrado."));
 
-        final List<Ator> atores = atorRepository.findByIdIn(request.getIdsAtores());
+        final List<Ator> atores =
+                atorRepository.findByIdIn(request.getIdsAtores());
+
+        validarAtores(atores, request);
 
         filmeRepository.save( Filme.builder()
                 .titulo(request.getTitulo())
@@ -40,4 +43,22 @@ public class CadastrarFilmeService {
                 .atores(atores)
                 .build());
     }
+
+    private void validarAtores(List<Ator> atores, CadastrarFilmeRequest request) {
+
+        if (request.getIdsAtores().size() != atores.size()) {
+
+            List<Long> idsEncontrados = atores.stream()
+                    .map(Ator::getId)
+                    .collect(Collectors.toList());
+
+            List<Long> idsNaoEncontrados = request.getIdsAtores().stream()
+                    .filter(idBuscado -> !idsEncontrados.contains(idBuscado))
+                    .collect(Collectors.toList());
+
+            throw new EntityNotFoundException(String.format(
+                    "Ator(es) não encontrado(s). id=%s", idsNaoEncontrados));
+        }
+    }
+
 }

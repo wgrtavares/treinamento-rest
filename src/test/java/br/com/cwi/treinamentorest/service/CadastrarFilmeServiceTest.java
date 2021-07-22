@@ -1,5 +1,6 @@
 package br.com.cwi.treinamentorest.service;
 
+import br.com.cwi.treinamentorest.domain.Ator;
 import br.com.cwi.treinamentorest.domain.Diretor;
 import br.com.cwi.treinamentorest.domain.Filme;
 import br.com.cwi.treinamentorest.repository.AtorRepository;
@@ -9,17 +10,11 @@ import br.com.cwi.treinamentorest.request.CadastrarFilmeRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -28,8 +23,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith({MockitoExtension.class})
 public class CadastrarFilmeServiceTest {
 
-    private static final Long ID_DIRETOR = 1L;
-    private static final List<Long> IDS_ATORES = Arrays.asList(1L, 2L);
+    private Long idDiretor = 1L;
+    private List<Long> idsAtores = Arrays.asList(1L, 2L);
 
     @InjectMocks
     private CadastrarFilmeService cadastrarFilmeService;
@@ -48,43 +43,95 @@ public class CadastrarFilmeServiceTest {
 
     private CadastrarFilmeRequest request;
 
+    private Diretor diretorEsperado;
+    private List<Ator> atoresEsperados;
+
     @BeforeEach
     private void setup(){
+
+        idDiretor = 1L;
+        idsAtores = Arrays.asList(1L, 2L);
+
         request = CadastrarFilmeRequest.builder()
                 .titulo("titulo teste")
-                .idDiretor(ID_DIRETOR)
-                .idsAtores(IDS_ATORES)
+                .idDiretor(idDiretor)
+                .idsAtores(idsAtores)
                 .build();
+
+        diretorEsperado = Diretor.builder()
+                .nome("Nome teste")
+                .id(idDiretor)
+                .build();
+
+        atoresEsperados = Arrays.asList(
+                new Ator(1L, "Ator Um"),
+                new Ator(2L, "Ator Dois")
+        );
     }
 
     @Test
     public void excecaoQuandoDiretorNull(){
         try {
             cadastrarFilmeService.cadastrarFilme(request);
-        } catch(ResponseStatusException  rse) {
-            assertEquals(HttpStatus.NOT_FOUND, rse.getStatus());
+        } catch(EntityNotFoundException enfe) {
+            assertEquals("Diretor não encontrado.", enfe.getMessage());
         } finally {
-            verify(diretorRepository).findById(ID_DIRETOR);
+            verify(diretorRepository).findById(idDiretor);
             verifyNoInteractions(atorRepository, filmeRepository);
+        }
+    }
+
+    @Test
+    public void excecaoQuandoTodosAtoresNaoEncontrados() {
+        when(diretorRepository.findById(idDiretor)).thenReturn(Optional.of(diretorEsperado));
+
+        try {
+            cadastrarFilmeService.cadastrarFilme(request);
+        } catch (EntityNotFoundException enfe) {
+            assertEquals("Ator(es) não encontrado(s). id=[1, 2]", enfe.getMessage());
+        } finally {
+            verify(diretorRepository).findById(idDiretor);
+            verify(atorRepository).findByIdIn(idsAtores);
+            verifyNoInteractions(filmeRepository);
+        }
+    }
+
+    @Test
+    public void excecaoQuandoUmAtorNaoEncontrado() {
+
+        when(diretorRepository.findById(idDiretor))
+                .thenReturn(
+                        Optional.of(diretorEsperado));
+        when(atorRepository.findByIdIn(idsAtores))
+                .thenReturn(
+                        Collections.singletonList(new Ator(1L, "Ator teste")));
+
+        try {
+
+            cadastrarFilmeService.cadastrarFilme(request);
+
+        } catch (EntityNotFoundException enfe) {
+            assertEquals("Ator(es) não encontrado(s). id=[2]", enfe.getMessage());
+        } finally {
+            verify(diretorRepository).findById(idDiretor);
+            verify(atorRepository).findByIdIn(idsAtores);
+            verifyNoInteractions(filmeRepository);
         }
     }
 
     @Test
     public void okDiretorExisteAtoresVazio() {
 
-        final Diretor diretorEsperado = Diretor.builder()
-                .nome("Nome teste")
-                .id(ID_DIRETOR)
-                .build();
+        request.setIdsAtores(new ArrayList<>());
 
         // mockando resultado para o findById
-        when(diretorRepository.findById(ID_DIRETOR)).thenReturn(Optional.of(diretorEsperado));
+        when(diretorRepository.findById(idDiretor)).thenReturn(Optional.of(diretorEsperado));
 
         // executando para realizar os injects
         cadastrarFilmeService.cadastrarFilme(request);
 
         // verificando se diretorRepository.findById foi chamado com ID_DIRETOR
-        verify(diretorRepository).findById(ID_DIRETOR);
+        verify(diretorRepository).findById(idDiretor);
 
         // Verificando se atorRepository.findByIdIn foi chamado com request.getIdsAtores()
         verify(atorRepository).findByIdIn(request.getIdsAtores());
@@ -96,6 +143,35 @@ public class CadastrarFilmeServiceTest {
         assertEquals(request.getTitulo(), queFoiSalvo.getTitulo());
         assertEquals(diretorEsperado, queFoiSalvo.getDiretor());
         assertTrue(queFoiSalvo.getAtores().isEmpty());
+
+    }
+
+    @Test
+    public void okDiretorExisteAtorExiste() {
+
+        // mockando resultado para o findById
+        when(diretorRepository.findById(idDiretor)).thenReturn(Optional.of(diretorEsperado));
+        when(atorRepository.findByIdIn(idsAtores)).thenReturn(atoresEsperados);
+
+        // executando para realizar os injects
+        cadastrarFilmeService.cadastrarFilme(request);
+
+        // verificando se diretorRepository.findById foi chamado com ID_DIRETOR
+        verify(diretorRepository).findById(idDiretor);
+
+        // Verificando se atorRepository.findByIdIn foi chamado com request.getIdsAtores()
+        verify(atorRepository).findByIdIn(request.getIdsAtores());
+
+        // Capturando objeto salvo em filmeRepository.save para testes logo abaixo
+        verify(filmeRepository).save(filmeCaptor.capture());
+
+        Filme queFoiSalvo = filmeCaptor.getValue();
+        assertEquals(request.getTitulo(), queFoiSalvo.getTitulo());
+        assertEquals(diretorEsperado, queFoiSalvo.getDiretor());
+        assertEquals(atoresEsperados.size(), queFoiSalvo.getAtores().size());
+        for (int i = 0; i < atoresEsperados.size(); i++) {
+            assertEquals(atoresEsperados.get(i).getId(), queFoiSalvo.getAtores().get(i).getId());
+        }
 
     }
 }

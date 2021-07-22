@@ -9,6 +9,9 @@ import br.com.cwi.treinamentorest.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/filme")
@@ -37,7 +40,13 @@ public class FilmesController implements FilmesControllerAPI {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public void cadastrarFilme(@RequestBody final CadastrarFilmeRequest request) {
-        cadastrarFilmeService.cadastrarFilme(request);
+        try {
+
+            cadastrarFilmeService.cadastrarFilme(request);
+
+        } catch (EntityNotFoundException enfe) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, enfe.getMessage(), enfe.getCause());
+        }
     }
 
     @PutMapping("/{id}")
